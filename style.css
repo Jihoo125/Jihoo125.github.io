@@ -1,55 +1,36 @@
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	font-family: Arial, sans-serif;
+/* Apply basic styling to your content */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
 }
 
-.chat-container {
-	width: 400px;
-	height: 600px;
-	margin: 50px auto;
-	border: 1px solid #ccc;
-	border-radius: 10px;
-	overflow: hidden;
+h1 {
+    font-size: 28px;
 }
 
-.chat-header {
-	background-color: #f2f2f2;
-	padding: 10px;
-	text-align: center;
+a {
+    text-decoration: none;
+    color: #007BFF;
 }
 
-.chat-history {
-	height: 400px;
-	overflow-y: scroll;
-	padding: 10px;
+a:hover {
+    text-decoration: underline;
 }
 
-.chat-box {
-	padding: 10px;
-	display: flex;
-	align-items: center;
+/* Style the call-to-action button */
+.cta-button {
+    display: inline-block;
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-decoration: none;
 }
 
-.chat-box input[type="text"] {
-	flex: 1;
-	height: 30px;
-	border-radius: 5px;
-	border: none;
-	padding: 5px;
-	margin-right: 10px;
-}
-
-.chat-box button {
-	background-color: #4CAF50;
-	color: white;
-	border: none;
-	padding: 10px;
-	border-radius: 5px;
-	cursor: pointer;
-}
-
-.chat-box button:hover {
-	background-color: #3e8e41;
+.cta-button:hover {
+    background-color: #0056b3;
 }
