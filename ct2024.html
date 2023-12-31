@@ -6,13 +6,19 @@
   <script>
     function updateCountdown() {
       // Set the date for the end of 2023 in KST
-      var endDate = new Date("2023-12-31T23:59:59+09:00");
+      var endDate = new Date("2023-12-31T15:59:59Z"); // UTC time for 2023-12-31 23:59:59 KST
 
-      // Get the current date and time in KST
+      // Get the current date and time in UTC
       var now = new Date();
 
       // Calculate the time difference between now and the end date
-      var timeDiff = endDate.getTime() - now.getTime();
+      var timeDiff = endDate - now;
+
+      // Check if the end date has passed
+      if (timeDiff <= 0) {
+        document.getElementById("countdown").innerHTML = "Happy New Year!";
+        return; // Stop the countdown if the end date has passed
+      }
 
       // Calculate days, hours, minutes, and seconds
       var days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
