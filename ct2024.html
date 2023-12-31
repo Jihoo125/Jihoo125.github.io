@@ -1,44 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Countdown to 2024 in KST</title>
-  <meta http-equiv="refresh" content="60"> <!-- Refresh every 60 seconds -->
-  <script>
-    function updateCountdown() {
-      // Set the date for the end of 2023 in KST
-      var endDate = new Date("2023-12-31T15:59:59Z"); // UTC time for 2023-12-31 23:59:59 KST
-
-      // Get the current date and time in UTC
-      var now = new Date();
-
-      // Calculate the time difference between now and the end date
-      var timeDiff = endDate - now;
-
-      // Check if the end date has passed
-      if (timeDiff <= 0) {
-        document.getElementById("countdown").innerHTML = "Happy New Year!";
-        return; // Stop the countdown if the end date has passed
-      }
-
-      // Calculate days, hours, minutes, and seconds
-      var days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-
-      // Display the countdown in the HTML element with id="countdown"
-      document.getElementById("countdown").innerHTML = days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds";
-    }
-
-    // Call updateCountdown() initially to display the countdown immediately
-    updateCountdown();
-
-    // Update the countdown every second
-    setInterval(updateCountdown, 1000);
-  </script>
+    <title>Countdown to 2024</title>
 </head>
 <body>
-  <h1>Countdown to 2024 in KST</h1>
-  <p id="countdown"></p>
+    <h1 id="countdown">Loading...</h1>
+
+    <script>
+        function countdown() {
+            var now = new Date();
+            var eventDate = new Date(2024, 0, 1, 0, 0, 0, 0); // January 1, 2024 00:00:00 KST
+
+            var currentTime = now.getTime();
+            var eventTime = eventDate.getTime();
+
+            var remTime = eventTime - currentTime;
+
+            var s = Math.floor(remTime / 1000);
+            var m = Math.floor(s / 60);
+            var h = Math.floor(m / 60);
+            var d = Math.floor(h / 24);
+
+            h %= 24;
+            m %= 60;
+            s %= 60;
+
+            h = (h < 10) ? "0" + h : h;
+            m = (m < 10) ? "0" + m : m;
+            s = (s < 10) ? "0" + s : s;
+
+            document.getElementById("countdown").textContent = d + "d " + h + "h " + m + "m " + s + "s left until 2024";
+
+            setTimeout(countdown, 1000);
+        }
+
+        countdown();
+    </script>
 </body>
 </html>
