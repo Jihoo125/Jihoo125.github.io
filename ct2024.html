@@ -5,6 +5,8 @@
 </head>
 <body>
     <h1 id="countdown">Loading...</h1>
+    <audio id="sound1" src="/audios/sound1.mp3" preload="auto"></audio>
+    <audio id="sound2" src="/audios/sound2.mp3" preload="auto"></audio>
 
     <script>
         function countdown() {
@@ -29,9 +31,14 @@
             m = (m < 10) ? "0" + m : m;
             s = (s < 10) ? "0" + s : s;
 
-            document.getElementById("countdown").textContent = d + "d " + h + "h " + m + "m " + s + "s left until 2024";
-
-            setTimeout(countdown, 1000);
+            if (remTime <= 0) {
+                document.getElementById("countdown").textContent = "Happy New Year!";
+                document.getElementById("sound2").play();
+            } else {
+                document.getElementById("countdown").textContent = d + "d " + h + "h " + m + "m " + s + "s left until 2024";
+                document.getElementById("sound1").play();
+                setTimeout(countdown, 1000);
+            }
         }
 
         countdown();
