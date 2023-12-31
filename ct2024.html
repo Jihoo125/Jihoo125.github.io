@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Countdown to 2024 in KST</title>
+  <meta http-equiv="refresh" content="60"> <!-- Refresh every 60 seconds -->
+  <script>
+    function updateCountdown() {
+      // Set the date for the end of 2023 in KST
+      var endDate = new Date("2023-12-31T23:59:59+09:00");
+
+      // Get the current date and time in KST
+      var now = new Date();
+
+      // Calculate the time difference between now and the end date
+      var timeDiff = endDate.getTime() - now.getTime();
+
+      // Calculate days, hours, minutes, and seconds
+      var days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+      // Display the countdown in the HTML element with id="countdown"
+      document.getElementById("countdown").innerHTML = days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds";
+    }
+
+    // Call updateCountdown() initially to display the countdown immediately
+    updateCountdown();
+
+    // Update the countdown every second
+    setInterval(updateCountdown, 1000);
+  </script>
+</head>
+<body>
+  <h1>Countdown to 2024 in KST</h1>
+  <p id="countdown"></p>
+</body>
+</html>
