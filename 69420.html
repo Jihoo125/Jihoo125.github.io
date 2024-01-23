@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password-Protected Site</title>
+  <script>
+    function checkPassword() {
+      var enteredPassword = prompt("Enter the password:");
+      var correctPassword = "DEV-82JS0-JA02J-JWP4B-91IW9-I29KW";
+
+      if (enteredPassword === correctPassword) {
+        document.getElementById("content").style.display = "block";
+      } else {
+        alert("Incorrect password. Access denied.");
+      }
+    }
+  </script>
+  <style>
+    #content {
+      display: none;
+    }
+  </style>
+</head>
+<body onload="checkPassword()">
+  <div id="content">
+    <!-- Your content goes here -->
+    <h1>Welcome to the Password-Protected Site!</h1>
+    <p>This is a simple demonstration.</p>
+  </div>
+</body>
+</html>
