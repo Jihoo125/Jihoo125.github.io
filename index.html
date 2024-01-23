@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Website Closed</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password-Protected Site</title>
+  <script>
+    function checkPassword() {
+      var enteredPassword = prompt("Enter the password:");
+      var correctPassword = "DEV-82JS0-JA02J-JWP4B-91IW9-I29KW";
+
+      if (enteredPassword === correctPassword) {
+        document.getElementById("content").style.display = "block";
+      } else {
+        alert("Incorrect password. Access denied.");
+      }
+    }
+  </script>
+  <style>
+    #content {
+      display: none;
+    }
+  </style>
 </head>
-<body>
+<body onload="checkPassword()">
+  <div id="content">
+    <!-- Your content goes here -->
     <h1>Hi!</h1>
     <h1>This website is closed. Please try our new website:</h1>
     <a href="https://jihoo125.github.io/warning-leave-website-newversion.html" class="cta-button">New Website</a>
