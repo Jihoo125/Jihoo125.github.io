@@ -39,6 +39,18 @@
 
         let currentVersion = "0.2.0";  // Current version of the OS
         let files = [];
+        let availableVersions = [];  // Array to hold available versions
+
+        // Fetch the version list from the JSON file
+        fetch('versions.json')
+            .then(response => response.json())
+            .then(data => {
+                availableVersions = data.versions;
+                appendOutput("Available versions: " + availableVersions.join(", "));
+            })
+            .catch(error => {
+                appendOutput("Error loading version list: " + error);
+            });
 
         function handleInput(event) {
             if (event.key === "Enter") {
@@ -77,17 +89,21 @@
                     break;
                 case "install":
                     if (args[1]) {
-                        simulateInstallation(args[1], 'install');
+                        if (isValidVersion(args[1])) {
+                            simulateInstallation(args[1], 'install');
+                        } else {
+                            appendOutput(`Version ${args[1]} is not available for installation.`);
+                        }
                     } else {
                         appendOutput("Usage: install [version]");
                     }
                     break;
                 case "update":
                     if (args[1]) {
-                        if (isValidUpdate(args[1])) {
+                        if (isValidUpdate(args[1]) && isValidVersion(args[1])) {
                             simulateInstallation(args[1], 'update');
                         } else {
-                            appendOutput(`Invalid update. You must update to a version higher than ${currentVersion}.`);
+                            appendOutput(`Invalid update. You must update to a version higher than ${currentVersion} and it must be available.`);
                         }
                     } else {
                         appendOutput("Usage: update [version]");
@@ -153,6 +169,10 @@
                 return true;
             }
             return false;
+        }
+
+        function isValidVersion(version) {
+            return availableVersions.includes(version);
         }
 
         input.addEventListener("keypress", handleInput);
