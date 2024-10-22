@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JihooOS Cloud Ver0.1.1</title>
+    <style>
+        body {
+            background-color: black;
+            color: lime;
+            font-family: monospace;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #terminal {
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        input {
+            border: none;
+            background: none;
+            color: lime;
+            width: 100%;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="terminal">
+        <pre id="output"></pre>
+        <input type="text" id="input" autofocus />
+    </div>
+
+    <script>
+        const output = document.getElementById("output");
+        const input = document.getElementById("input");
+
+        let files = [];
+
+        function handleInput(event) {
+            if (event.key === "Enter") {
+                const command = input.value.trim();
+                processCommand(command);
+                input.value = "";
+            }
+        }
+
+        function processCommand(command) {
+            const args = command.split(" ");
+            switch (args[0]) {
+                case "help":
+                    output.innerText += "Commands: help, exit, version, ls, delete [filename]\n";
+                    break;
+                case "exit":
+                    output.innerText += "Exiting JihooOS Cloud Ver0.1.1...\n";
+                    break;
+                case "version":
+                    output.innerText += "JihooOS Cloud Ver0.1.1\n";
+                    break;
+                case "ls":
+                    if (files.length === 0) {
+                        output.innerText += "No files found.\n";
+                    } else {
+                        output.innerText += files.join("\n") + "\n";
+                    }
+                    break;
+                case "delete":
+                    if (args[1]) {
+                        files = files.filter(file => file !== args[1]);
+                        output.innerText += `File ${args[1]} deleted.\n`;
+                    } else {
+                        output.innerText += "Usage: delete [filename]\n";
+                    }
+                    break;
+                default:
+                    output.innerText += "Unknown command. Type 'help' for a list of commands.\n";
+                    break;
+            }
+            scrollOutput();
+        }
+
+        function scrollOutput() {
+            output.scrollTop = output.scrollHeight;
+        }
+
+        input.addEventListener("keypress", handleInput);
+    </script>
+</body>
+</html>
