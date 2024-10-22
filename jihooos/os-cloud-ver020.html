@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JihooOS Cloud Ver0.2.0</title>
+    <style>
+        body {
+            background-color: black;
+            color: lime;
+            font-family: monospace;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #terminal {
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        input {
+            border: none;
+            background: none;
+            color: lime;
+            width: 100%;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="terminal">
+        <pre id="output"></pre>
+        <input type="text" id="input" autofocus />
+    </div>
+
+    <script>
+        const output = document.getElementById("output");
+        const input = document.getElementById("input");
+
+        let currentVersion = "0.2.0";  // Current version of the OS
+        let files = [];
+
+        function handleInput(event) {
+            if (event.key === "Enter") {
+                const command = input.value.trim();
+                processCommand(command);
+                input.value = "";
+            }
+        }
+
+        function processCommand(command) {
+            const args = command.split(" ");
+            switch (args[0]) {
+                case "help":
+                    appendOutput("Commands: help, exit, version, ls, delete [filename], install [version], update [version]");
+                    break;
+                case "exit":
+                    appendOutput(`Exiting JihooOS Cloud Ver${currentVersion}...`);
+                    break;
+                case "version":
+                    appendOutput(`JihooOS Cloud Ver${currentVersion}`);
+                    break;
+                case "ls":
+                    if (files.length === 0) {
+                        appendOutput("No files found.");
+                    } else {
+                        appendOutput(files.join("\n"));
+                    }
+                    break;
+                case "delete":
+                    if (args[1]) {
+                        files = files.filter(file => file !== args[1]);
+                        appendOutput(`File ${args[1]} deleted.`);
+                    } else {
+                        appendOutput("Usage: delete [filename]");
+                    }
+                    break;
+                case "install":
+                    if (args[1]) {
+                        simulateInstallation(args[1], 'install');
+                    } else {
+                        appendOutput("Usage: install [version]");
+                    }
+                    break;
+                case "update":
+                    if (args[1]) {
+                        if (isValidUpdate(args[1])) {
+                            simulateInstallation(args[1], 'update');
+                        } else {
+                            appendOutput(`Invalid update. You must update to a version higher than ${currentVersion}.`);
+                        }
+                    } else {
+                        appendOutput("Usage: update [version]");
+                    }
+                    break;
+                default:
+                    appendOutput("Unknown command. Type 'help' for a list of commands.");
+                    break;
+            }
+            scrollOutput();
+        }
+
+        function appendOutput(text) {
+            output.innerText += text + "\n";
+        }
+
+        function scrollOutput() {
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function simulateInstallation(version, commandType) {
+            appendOutput(`Starting ${commandType} of JihooOS Cloud Ver${version}...`);
+            
+            let progress = 0;
+            let phase = "Getting installer";
+
+            const interval = setInterval(() => {
+                if (progress <= 100) {
+                    appendOutput(`${phase}...(${progress}%)`);
+                }
+
+                if (progress === 100) {
+                    if (phase === "Getting installer") {
+                        phase = "Verifying Install";
+                        progress = 0;
+                    } else if (phase === "Verifying Install") {
+                        phase = "Installing";
+                        progress = 0;
+                    } else if (phase === "Installing") {
+                        appendOutput(`JihooOS Cloud Ver${version} installed successfully!`);
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            window.location.href = `os-cloud-ver${version.replace(/\./g, '')}.html`; // Redirect to new version
+                        }, 2000);
+                    }
+                }
+                progress += 10;
+            }, 6000); // Each phase takes about 60 seconds
+        }
+
+        function isValidUpdate(newVersion) {
+            const [newMajor, newMinor, newPatch] = newVersion.split('.').map(Number);
+            const [currentMajor, currentMinor, currentPatch] = currentVersion.split('.').map(Number);
+
+            if (newMajor > currentMajor) {
+                // Major version upgrade is allowed only if the current minor version is at max patch
+                return currentPatch === 9;  // Example rule: patch number must be max to update to new major
+            } else if (newMajor === currentMajor && newMinor > currentMinor) {
+                // Minor version upgrade is allowed from the latest patch of the previous minor version
+                return currentPatch === 9;
+            } else if (newMajor === currentMajor && newMinor === currentMinor && newPatch > currentPatch) {
+                // Patch version upgrade is allowed
+                return true;
+            }
+            return false;
+        }
+
+        input.addEventListener("keypress", handleInput);
+    </script>
+</body>
+</html>
