@@ -42,7 +42,7 @@
         let availableVersions = [];  // Array to hold available versions
 
         // Fetch the version list from the JSON file
-        fetch('versions.json')
+        fetch('/jihooos/versions.json')
             .then(response => response.json())
             .then(data => {
                 availableVersions = data.versions;
