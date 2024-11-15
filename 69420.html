@@ -7,7 +7,15 @@
   <script>
     function checkPassword() {
       var enteredPassword = prompt("Enter the password:");
-      var correctPassword = "DEV-82JS0-JA02J-JWP4B-91IW9-I29KW";
+      var correctPassword = [
+  "D", "\u200B", "E", "\u200C", "V", "\u200D", "-", "\u200B",
+  "8", "\u200C", "2", "\u200D", "J", "\u200B", "S", "0", "-", "\u200C",
+  "J", "\u200B", "A", "0", "2", "J", "-", "\u200D",
+  "J", "\u200B", "W", "\u200C", "P", "4", "B", "-", "\u200B",
+  "9", "\u200C", "1", "I", "W", "9", "-", "\u200D",
+  "I", "\u200B", "2", "9", "K", "W"
+].join("");
+
 
       if (enteredPassword === correctPassword) {
         document.getElementById("content").style.display = "block";
