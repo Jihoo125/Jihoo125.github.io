@@ -46,7 +46,7 @@
             .then(response => response.json())
             .then(data => {
                 availableVersions = data.versions;
-                appendOutput("Available versions: " + availableVersions.join(", "));
+                appendOutput("JihooOS is no londer getting updated. Learn More. Available versions: " + availableVersions.join(", "));
             })
             .catch(error => {
                 appendOutput("Error loading version list: " + error);
