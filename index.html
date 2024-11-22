@@ -1,17 +1,63 @@
-<html>
-  <head>
-    <title>reCAPTCHA demo: Simple page</title>
-     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-     <script>
-       function onSubmit(token) {
-         document.getElementById("demo-form").submit();
-       }
-     </script>
-  </head>
-  <body>
-    <form id="demo-form" action="?" method="POST">
-      <button class="g-recaptcha" data-sitekey="6LfprXspAAAAAPk4SPfrzKcXbcb3csHnS3KaIzNG" data-callback="onSubmit">Submit</button>
-      <br/>
-    </form>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Language Example Page</title>
+    <script>
+        // Function to get query parameters
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Function to set the lang query parameter in the URL
+        function setLanguage(lang) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('lang', lang); // Set the lang parameter
+            window.history.pushState({}, '', url); // Update the URL without reloading the page
+            loadContent(lang); // Load the content based on the selected language
+        }
+
+        // Change language content based on the lang parameter
+        function loadContent(lang) {
+            // Hide all sections by default
+            document.getElementById('en-us-content').style.display = 'none';
+            document.getElementById('ko-kr-content').style.display = 'none';
+            
+            // Show content based on the lang parameter
+            if (lang === 'en-us') {
+                document.getElementById('en-us-content').style.display = 'block'; // Show English content
+            } else if (lang === 'ko-kr') {
+                document.getElementById('ko-kr-content').style.display = 'block'; // Show Korean content
+            }
+        }
+
+        // Initialize content based on the current lang parameter in the URL
+        window.onload = function() {
+            const lang = getQueryParam('lang') || 'en-us'; // Default to 'en-us' if no lang param
+            loadContent(lang);
+        }
+    </script>
+</head>
+<body>
+    <h1>Language-Specific Content</h1>
+
+    <!-- Buttons to change language -->
+    <button onclick="setLanguage('en-us')">English</button>
+    <button onclick="setLanguage('ko-kr')">Korean</button>
+
+    <!-- English Content -->
+    <div id="en-us-content" style="display:none;">
+        <h2>Welcome to the Page (English)</h2>
+        <p>What is here?</p>
+        <p>Enjoy your stay!</p>
+    </div>
+
+    <!-- Korean Content -->
+    <div id="ko-kr-content" style="display:none;">
+        <h2>페이지에 오신 것을 환영합니다 (Korean)</h2>
+        <p>여기엔 무엇이 있을까요?</p>
+        <p>즐거운 시간 되세요!</p>
+    </div>
+</body>
 </html>
